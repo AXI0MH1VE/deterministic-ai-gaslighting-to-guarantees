@@ -19,6 +19,22 @@ This repository contains the complete strategic intelligence briefing and techni
 
 ---
 
+## Constitutional Framework
+
+![CDA Compliant](https://img.shields.io/badge/CDA-v1.0%20Compliant-brightgreen)
+[![Constitution](https://img.shields.io/badge/Constitution-Read-blue)](https://github.com/AXI0MH1VE/CDA-Constitution)
+
+This project operates under the **[Constitution of a Deterministic Assistant (CDA-v1.0)](https://github.com/AXI0MH1VE/CDA-Constitution)**, establishing transparent operational boundaries for AI systems.
+
+**Core Principles:**
+- 🔍 **Transparency**: Glass Box Mandate - All operations are auditable
+- ⚙️ **Determinism**: Predictable Tool Mandate - No autonomous agency
+- 🤝 **Subservience**: Tool-in-Hand Mandate - Human authority paramount
+
+This whitepaper exemplifies CDA-v1.0 principles through transparent research methodology, deterministic analysis frameworks, and honest assessment of both probabilistic and deterministic AI approaches. See [.github/CONSTITUTION.md](.github/CONSTITUTION.md) for full constitutional text and [.github/COMPLIANCE.md](.github/COMPLIANCE.md) for implementation details.
+
+---
+
 ## Repository Contents
 
 ### 1. [whitepaper.md](whitepaper.md)
@@ -129,7 +145,7 @@ Permits redistribution with credit; modifications require author permission.
 ## Document Metadata
 
 - **Repository Created:** November 18, 2025
-- **Last Updated:** November 18, 2025
+- **Last Updated:** November 24, 2025
 - **Classification:** Public Archive
 - **Ledger Entry:** #47
 - **Word Count (Total):** ~12,000 across all documents
