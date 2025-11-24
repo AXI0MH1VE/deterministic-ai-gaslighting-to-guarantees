@@ -1,0 +1,87 @@
+name: CDA-v1.0 Compliance Validation
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  validate-compliance:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Check Constitution File
+        run: |
+          if [ ! -f .github/CONSTITUTION.md ]; then
+            echo "❌ Error: CONSTITUTION.md not found in .github/"
+            exit 1
+          fi
+          echo "✅ Constitution file present"
+      
+      - name: Check Compliance Documentation
+        run: |
+          if [ ! -f .github/COMPLIANCE.md ]; then
+            echo "❌ Error: COMPLIANCE.md not found in .github/"
+            exit 1
+          fi
+          echo "✅ Compliance documentation present"
+      
+      - name: Validate README Disclosure
+        run: |
+          if [ ! -f README.md ]; then
+            echo "⚠️  Warning: README.md not found"
+            exit 0
+          fi
+          
+          if ! grep -q "Constitution of a Deterministic Assistant" README.md; then
+            echo "❌ Error: README missing CDA disclosure"
+            exit 1
+          fi
+          echo "✅ README contains CDA disclosure"
+      
+      - name: Check License File
+        run: |
+          if [ ! -f LICENSE ] && [ ! -f LICENSE.md ] && [ ! -f LICENSE.txt ]; then
+            echo "⚠️  Warning: LICENSE file not found"
+          else
+            echo "✅ License file present"
+          fi
+      
+      - name: Scan for Prohibited Language
+        run: |
+          echo "Scanning for constitutional violations..."
+          
+          prohibited=("I am conscious" "I am alive" "I am sentient" "I feel" "I believe" "I want")
+          violations_found=false
+          
+          for term in "${prohibited[@]}"; do
+            if grep -r "$term" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github --exclude="*.md" 2>/dev/null | grep -v "CONSTITUTION.md" | grep -v "COMPLIANCE.md"; then
+              echo "⚠️  Found potentially prohibited claim: $term"
+              violations_found=true
+            fi
+          done
+          
+          if [ "$violations_found" = false ]; then
+            echo "✅ No prohibited claims found"
+          else
+            echo "⚠️  Review flagged content for constitutional compliance"
+          fi
+      
+      - name: Compliance Summary
+        if: always()
+        run: |
+          echo ""
+          echo "═══════════════════════════════════════"
+          echo "CDA-v1.0 Compliance Validation Complete"
+          echo "═══════════════════════════════════════"
+          echo "Repository: ${{ github.repository }}"
+          echo "CDA Version: 1.0.0"
+          echo "Validated: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "═══════════════════════════════════════"
